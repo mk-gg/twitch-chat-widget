@@ -49,10 +49,17 @@
   padding: 10px;
   height: 400px;
   overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.8); /* Default background */
+  color: white;
+}
+
+.twitch-chat.transparent {
+  background-color: transparent;
 }
 
 .chat-message {
   margin-bottom: 5px;
+  /*text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);*/ /* Improve readability on various backgrounds */
 }
 
 .chat-only {
@@ -63,5 +70,31 @@
 .chat-only .twitch-chat {
   height: 100%;
   border: none;
+}
+
+.chat-only.transparent {
+  background-color: transparent;
+}
+
+.controls {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.transparency-toggle {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.transparency-toggle input {
+  margin-right: 10px;
+}
+
+.transparency-slider {
+  width: 100%;
+  margin-top: 10px;
 }
 
