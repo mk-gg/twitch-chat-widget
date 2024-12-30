@@ -1,0 +1,67 @@
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.channel-form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.channel-input {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+
+.input-button-gap {
+  width: 10px;
+}
+
+.submit-button,
+.generate-url-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #9146FF;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.submit-button:hover,
+.generate-url-button:hover {
+  background-color: #7D2EE1;
+}
+
+.generate-url-button {
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.twitch-chat {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  height: 400px;
+  overflow-y: auto;
+}
+
+.chat-message {
+  margin-bottom: 5px;
+}
+
+.chat-only {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.chat-only .twitch-chat {
+  height: 100%;
+  border: none;
+}
+
