@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import tmi from "tmi.js";
 import { parseBadges, parseEmotes } from "emotettv";
 
-function TwitchChat({ channelName, isTransparent, opacity }) {
+function TwitchChat({ channelName, isTransparent, opacity, borderRadius, backgroundColor }) {
   const [messages, setMessages] = useState([]);
   const [client, setClient] = useState(null);
   const [options, setOptions] = useState({ channelId: null });
@@ -41,7 +41,7 @@ function TwitchChat({ channelName, isTransparent, opacity }) {
         const badgesHTML = badges.toHTML();
         
         const message = await parseEmotes(text, tags.emotes, options);
-        const messageHTML = message.toHTML();
+        const messageHTML = message.toHTML().replace(/<img/g, '<img class="inline-block align-top"');
         const botFilter = ['nightbot'];
 
         if (botFilter.includes(tags.username)) {
@@ -70,16 +70,22 @@ function TwitchChat({ channelName, isTransparent, opacity }) {
     };
   }, [channelName, options]);
 
+  const chatStyle = {
+    backgroundColor: isTransparent ? 'transparent' : `${backgroundColor}${Math.round(opacity * 255).toString(16).padStart(2, '0')}`,
+    ...(isTransparent ? {} : { borderRadius: `${borderRadius}px` }),
+  };
+
   return (
-    <div 
-      className={`twitch-chat ${isTransparent ? 'transparent' : ''}`}
-      style={!isTransparent ? { backgroundColor: `rgba(0, 0, 0, ${opacity})` } : {}}
-    >
+    <div className="twitch-chat h-96 overflow-y-auto scrollbar-hide p-4" style={chatStyle}>
       {messages.map((msg, index) => (
-        <div key={index} className="chat-message">
-          <span dangerouslySetInnerHTML={{ __html: msg.badges }} />
-          <b style={{ color: msg.color }}>{msg.username}</b>:  
-          <span dangerouslySetInnerHTML={{ __html: msg.message }} />
+        <div key={index} className="chat-message mb-2 text-white text-shadow">
+          <span 
+            className="inline-block align-top mr-1"
+            dangerouslySetInnerHTML={{ __html: msg.badges }} 
+          />
+          <b className="inline-block align-middle" style={{ color: msg.color }}>{msg.username}</b>
+          <span className="align-middle mr-1">:</span> 
+          <span className="align-middle" dangerouslySetInnerHTML={{ __html: msg.message }} />
         </div>
       ))}
     </div>

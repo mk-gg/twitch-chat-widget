@@ -1,72 +1,50 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ChannelForm from './components/ChannelForm'
 import TwitchChat from './components/TwitchChat'
+import ChatControls from './components/ChatControls'
+import { useChatSettings } from './hooks/useChatSettings'
 import './App.css'
 
 function App() {
   const [channelName, setChannelName] = useState('')
-  const [isTransparent, setIsTransparent] = useState(false)
-  const [opacity, setOpacity] = useState(0.8)
+  const chatSettings = useChatSettings()
 
   const handleChannelSubmit = (channel) => {
     setChannelName(channel)
   }
 
   const handleGenerateUrl = () => {
-    const url = `${window.location.origin}/chat/${channelName}?transparent=${isTransparent}&opacity=${opacity}`
+    const params = new URLSearchParams({
+      transparent: chatSettings.isTransparent,
+      opacity: chatSettings.opacity,
+      backgroundColor: chatSettings.backgroundColor.slice(1)
+    })
+    if (!chatSettings.isTransparent) {
+      params.append('borderRadius', chatSettings.borderRadius)
+    }
+    const url = `${window.location.origin}/chat/${channelName}?${params.toString()}`
     window.open(url, '_blank')
   }
 
-  const toggleTransparency = () => {
-    setIsTransparent(!isTransparent)
-  }
-
-  const handleOpacityChange = (e) => {
-    setOpacity(e.target.value)
-  }
-
-  useEffect(() => {
-    const root = document.documentElement
-    root.style.setProperty('--chat-background-opacity', opacity)
-  }, [opacity])
-
   return (
-    <div className="app">
-      {!channelName ? (
-        <ChannelForm onSubmit={handleChannelSubmit} />
-      ) : (
-        <>
-          <TwitchChat channelName={channelName} isTransparent={isTransparent} opacity={opacity} />
-          <div className="controls">
-            <button onClick={handleGenerateUrl} className="generate-url-button">
-              Generate URL for OBS
-            </button>
-            <div className="transparency-toggle">
-              <input
-                type="checkbox"
-                id="transparencyToggle"
-                checked={isTransparent}
-                onChange={toggleTransparency}
-              />
-              <label htmlFor="transparencyToggle">Fully Transparent Background</label>
-            </div>
-            {!isTransparent && (
-              <div className="transparency-slider">
-                <label htmlFor="opacitySlider">Background Opacity: {opacity}</label>
-                <input
-                  type="range"
-                  id="opacitySlider"
-                  min="0"
-                  max="1"
-                  step="0.1"
-                  value={opacity}
-                  onChange={handleOpacityChange}
-                />
-              </div>
-            )}
-          </div>
-        </>
-      )}
+    <div className="app min-h-screen bg-gray-900 text-white p-4">
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-3xl font-bold text-center mb-8">Twitch Chat Overlay</h1>
+        {!channelName ? (
+          <ChannelForm onSubmit={handleChannelSubmit} />
+        ) : (
+          <>
+            <TwitchChat 
+              channelName={channelName} 
+              {...chatSettings}
+            />
+            <ChatControls 
+              {...chatSettings}
+              onGenerateUrl={handleGenerateUrl}
+            />
+          </>
+        )}
+      </div>
     </div>
   )
 }

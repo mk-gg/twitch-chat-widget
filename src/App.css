@@ -1,100 +1,21 @@
-.app {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.text-shadow {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
-.channel-form {
-  display: flex;
-  margin-bottom: 20px;
+.chat-message img {
+  display: inline-block;
+  margin-right: 2px;
 }
 
-.channel-input {
-  flex-grow: 1;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px 0 0 4px;
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
-.input-button-gap {
-  width: 10px;
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
-
-.submit-button,
-.generate-url-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #9146FF;
-  color: white;
-  border: none;
-  border-radius: 0 4px 4px 0;
-  cursor: pointer;
-}
-
-.submit-button:hover,
-.generate-url-button:hover {
-  background-color: #7D2EE1;
-}
-
-.generate-url-button {
-  margin-top: 10px;
-  width: 100%;
-  border-radius: 4px;
-}
-
-.twitch-chat {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
-  height: 400px;
-  overflow-y: auto;
-  background-color: rgba(0, 0, 0, 0.8); /* Default background */
-  color: white;
-}
-
-.twitch-chat.transparent {
-  background-color: transparent;
-}
-
-.chat-message {
-  margin-bottom: 5px;
-  /*text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);*/ /* Improve readability on various backgrounds */
-}
-
-.chat-only {
-  height: 100vh;
-  overflow: hidden;
-}
-
-.chat-only .twitch-chat {
-  height: 100%;
-  border: none;
-}
-
-.chat-only.transparent {
-  background-color: transparent;
-}
-
-.controls {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.transparency-toggle {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-}
-
-.transparency-toggle input {
-  margin-right: 10px;
-}
-
-.transparency-slider {
-  width: 100%;
-  margin-top: 10px;
-}
-
