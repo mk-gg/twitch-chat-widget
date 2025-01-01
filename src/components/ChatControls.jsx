@@ -1,4 +1,5 @@
 import React from 'react';
+import { HexColorPicker } from 'react-colorful';
 
 function ChatControls({ 
   isTransparent, 
@@ -42,13 +43,13 @@ function ChatControls({
             />
           </div>
           <div className="color-picker">
-            <label htmlFor="colorPicker" className="block mb-1">Background Color:</label>
+            <label className="block mb-1">Background Color:</label>
+            <HexColorPicker color={backgroundColor} onChange={handleColorChange} />
             <input
-              type="color"
-              id="colorPicker"
+              type="text"
               value={backgroundColor}
-              onChange={handleColorChange}
-              className="w-full h-10 rounded"
+              onChange={(e) => handleColorChange(e.target.value)}
+              className="mt-2 w-full px-2 py-1 border border-gray-300 rounded text-black"
             />
           </div>
           <div className="border-radius-slider">

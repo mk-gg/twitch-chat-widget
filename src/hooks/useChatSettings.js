@@ -9,7 +9,12 @@ export function useChatSettings() {
   const toggleTransparency = () => setIsTransparent(prev => !prev);
   const handleOpacityChange = (e) => setOpacity(parseFloat(e.target.value));
   const handleBorderRadiusChange = (e) => setBorderRadius(parseInt(e.target.value));
-  const handleColorChange = (e) => setBackgroundColor(e.target.value);
+  const handleColorChange = (color) => {
+    // Check if the color is a valid hex color
+    if (/^#[0-9A-F]{6}$/i.test(color)) {
+      setBackgroundColor(color);
+    }
+  };
 
   return {
     isTransparent,
