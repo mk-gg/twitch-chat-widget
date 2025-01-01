@@ -36,11 +36,21 @@ function App() {
           <>
             <TwitchChat 
               channelName={channelName} 
-              {...chatSettings}
+              isTransparent={chatSettings.isTransparent}
+              opacity={chatSettings.opacity}
+              borderRadius={chatSettings.borderRadius}
+              backgroundColor={chatSettings.backgroundColor}
             />
             <ChatControls 
-              {...chatSettings}
+              isTransparent={chatSettings.isTransparent}
+              opacity={chatSettings.opacity}
+              borderRadius={chatSettings.borderRadius}
+              backgroundColor={chatSettings.backgroundColor}
               onGenerateUrl={handleGenerateUrl}
+              toggleTransparency={chatSettings.toggleTransparency}
+              handleOpacityChange={chatSettings.handleOpacityChange}
+              handleBorderRadiusChange={chatSettings.handleBorderRadiusChange}
+              handleColorChange={chatSettings.handleColorChange}
             />
           </>
         )}

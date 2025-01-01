@@ -6,10 +6,10 @@ function ChatControls({
   borderRadius, 
   backgroundColor,
   onGenerateUrl,
-  onToggleTransparency,
-  onOpacityChange,
-  onBorderRadiusChange,
-  onColorChange
+  toggleTransparency,
+  handleOpacityChange,
+  handleBorderRadiusChange,
+  handleColorChange
 }) {
   return (
     <div className="controls space-y-4 mt-4">
@@ -21,7 +21,7 @@ function ChatControls({
           type="checkbox"
           id="transparencyToggle"
           checked={isTransparent}
-          onChange={onToggleTransparency}
+          onChange={toggleTransparency}
           className="mr-2"
         />
         <label htmlFor="transparencyToggle">Fully Transparent Background</label>
@@ -29,15 +29,15 @@ function ChatControls({
       {!isTransparent && (
         <>
           <div className="opacity-slider">
-            <label htmlFor="opacitySlider" className="block mb-1">Background Opacity: {opacity}</label>
+            <label htmlFor="opacitySlider" className="block mb-1">Background Opacity: {opacity.toFixed(2)}</label>
             <input
               type="range"
               id="opacitySlider"
               min="0"
               max="1"
-              step="0.1"
+              step="0.01"
               value={opacity}
-              onChange={onOpacityChange}
+              onChange={handleOpacityChange}
               className="w-full"
             />
           </div>
@@ -47,7 +47,7 @@ function ChatControls({
               type="color"
               id="colorPicker"
               value={backgroundColor}
-              onChange={onColorChange}
+              onChange={handleColorChange}
               className="w-full h-10 rounded"
             />
           </div>
@@ -60,7 +60,7 @@ function ChatControls({
               max="20"
               step="1"
               value={borderRadius}
-              onChange={onBorderRadiusChange}
+              onChange={handleBorderRadiusChange}
               className="w-full"
             />
           </div>
