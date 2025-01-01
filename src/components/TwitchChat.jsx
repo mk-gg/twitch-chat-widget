@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import tmi from "tmi.js";
 import { parseBadges, parseEmotes } from "emotettv";
 
@@ -6,6 +6,7 @@ function TwitchChat({ channelName, isTransparent, opacity, borderRadius, backgro
   const [messages, setMessages] = useState([]);
   const [client, setClient] = useState(null);
   const [options, setOptions] = useState({ channelId: null });
+  const chatContainerRef = useRef(null);
 
   const fetchChannelId = async (channelName) => {
     try {
@@ -70,13 +71,23 @@ function TwitchChat({ channelName, isTransparent, opacity, borderRadius, backgro
     };
   }, [channelName, options]);
 
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   const chatStyle = {
     backgroundColor: isTransparent ? 'transparent' : `${backgroundColor}${Math.round(opacity * 255).toString(16).padStart(2, '0')}`,
     ...(isTransparent ? {} : { borderRadius: `${borderRadius}px` }),
   };
 
   return (
-    <div className="twitch-chat h-96 overflow-y-auto scrollbar-hide p-4" style={chatStyle}>
+    <div 
+      ref={chatContainerRef}
+      className="twitch-chat h-96 overflow-y-auto scrollbar-hide p-4" 
+      style={chatStyle}
+    >
       {messages.map((msg, index) => (
         <div key={index} className="chat-message mb-2 text-white text-shadow">
           <span 
