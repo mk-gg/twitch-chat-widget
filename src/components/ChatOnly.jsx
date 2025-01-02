@@ -9,6 +9,7 @@ function ChatOnly() {
   const opacity = parseFloat(searchParams.get('opacity') || '0.8')
   const backgroundColor = `#${searchParams.get('backgroundColor') || '000000'}`
   const borderRadius = !isTransparent ? parseInt(searchParams.get('borderRadius') || '0') : 0
+  const smoothTransition = searchParams.get('smoothTransition') === 'true'
 
   return (
     <div className="chat-only h-screen overflow-hidden">
@@ -18,6 +19,7 @@ function ChatOnly() {
         opacity={opacity}
         borderRadius={borderRadius}
         backgroundColor={backgroundColor}
+        smoothTransition={smoothTransition}
       />
     </div>
   )

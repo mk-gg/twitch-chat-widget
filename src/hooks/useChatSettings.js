@@ -5,6 +5,7 @@ export function useChatSettings() {
   const [opacity, setOpacity] = useState(0.8);
   const [borderRadius, setBorderRadius] = useState(0);
   const [backgroundColor, setBackgroundColor] = useState('#000000');
+  const [smoothTransition, setSmoothTransition] = useState(false);
 
   const toggleTransparency = () => setIsTransparent(prev => !prev);
   const handleOpacityChange = (e) => setOpacity(parseFloat(e.target.value));
@@ -15,6 +16,7 @@ export function useChatSettings() {
       setBackgroundColor(color);
     }
   };
+  const toggleSmoothTransition = () => setSmoothTransition(prev => !prev);
 
   return {
     isTransparent,
@@ -25,6 +27,8 @@ export function useChatSettings() {
     handleOpacityChange,
     handleBorderRadiusChange,
     handleColorChange,
+    smoothTransition,
+    toggleSmoothTransition,
   };
 }
 

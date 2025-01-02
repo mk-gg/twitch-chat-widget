@@ -6,11 +6,13 @@ function ChatControls({
   opacity, 
   borderRadius, 
   backgroundColor,
+  smoothTransition,
   onGenerateUrl,
   toggleTransparency,
   handleOpacityChange,
   handleBorderRadiusChange,
-  handleColorChange
+  handleColorChange,
+  onToggleSmoothTransition
 }) {
   return (
     <div className="controls space-y-4 mt-4">
@@ -67,6 +69,16 @@ function ChatControls({
           </div>
         </>
       )}
+      <div className="smooth-transition-toggle flex items-center">
+        <input
+          type="checkbox"
+          id="smoothTransitionToggle"
+          checked={smoothTransition}
+          onChange={onToggleSmoothTransition}
+          className="mr-2"
+        />
+        <label htmlFor="smoothTransitionToggle">Smooth Message Transitions</label>
+      </div>
     </div>
   );
 }

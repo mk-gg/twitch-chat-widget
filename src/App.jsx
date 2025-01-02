@@ -17,7 +17,8 @@ function App() {
     const params = new URLSearchParams({
       transparent: chatSettings.isTransparent,
       opacity: chatSettings.opacity,
-      backgroundColor: chatSettings.backgroundColor.slice(1)
+      backgroundColor: chatSettings.backgroundColor.slice(1),
+      smoothTransition: chatSettings.smoothTransition
     })
     if (!chatSettings.isTransparent) {
       params.append('borderRadius', chatSettings.borderRadius)
@@ -40,17 +41,20 @@ function App() {
               opacity={chatSettings.opacity}
               borderRadius={chatSettings.borderRadius}
               backgroundColor={chatSettings.backgroundColor}
+              smoothTransition={chatSettings.smoothTransition}
             />
             <ChatControls 
               isTransparent={chatSettings.isTransparent}
               opacity={chatSettings.opacity}
               borderRadius={chatSettings.borderRadius}
               backgroundColor={chatSettings.backgroundColor}
+              smoothTransition={chatSettings.smoothTransition}
               onGenerateUrl={handleGenerateUrl}
               toggleTransparency={chatSettings.toggleTransparency}
               handleOpacityChange={chatSettings.handleOpacityChange}
               handleBorderRadiusChange={chatSettings.handleBorderRadiusChange}
               handleColorChange={chatSettings.handleColorChange}
+              onToggleSmoothTransition={chatSettings.toggleSmoothTransition}
             />
           </>
         )}
