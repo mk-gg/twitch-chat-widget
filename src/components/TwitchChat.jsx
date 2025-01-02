@@ -43,7 +43,7 @@ function TwitchChat({ channelName, isTransparent, opacity, borderRadius, backgro
         
         const message = await parseEmotes(text, tags.emotes, options);
         const messageHTML = message.toHTML().replace(/<img/g, '<img class="inline-block align-top"');
-        const botFilter = ['nightbot'];
+        const botFilter = ['nightbot', 'fossabot', 'streamelements', 'moobot', 'streamlabs', 'phantombot'];
 
         if (botFilter.includes(tags.username)) {
           return;
@@ -95,7 +95,7 @@ function TwitchChat({ channelName, isTransparent, opacity, borderRadius, backgro
             dangerouslySetInnerHTML={{ __html: msg.badges }} 
           />
           <b className="inline-block align-middle" style={{ color: msg.color }}>{msg.username}</b>
-          <span className="align-middle mr-1">:</span> 
+          <span className="align-middle ml-0.5 mr-2">:</span> 
           <span className="align-middle" dangerouslySetInnerHTML={{ __html: msg.message }} />
         </div>
       ))}
