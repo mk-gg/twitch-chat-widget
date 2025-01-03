@@ -18,7 +18,9 @@ function App() {
       transparent: chatSettings.isTransparent,
       opacity: chatSettings.opacity,
       backgroundColor: chatSettings.backgroundColor.slice(1),
-      smoothTransition: chatSettings.smoothTransition
+      smoothTransition: chatSettings.smoothTransition,
+      botFilterEnabled: chatSettings.botFilterEnabled,
+      showBadges: chatSettings.showBadges
     })
     if (!chatSettings.isTransparent) {
       params.append('borderRadius', chatSettings.borderRadius)
@@ -42,6 +44,8 @@ function App() {
               borderRadius={chatSettings.borderRadius}
               backgroundColor={chatSettings.backgroundColor}
               smoothTransition={chatSettings.smoothTransition}
+              botFilterEnabled={chatSettings.botFilterEnabled}
+              showBadges={chatSettings.showBadges}
             />
             <ChatControls 
               isTransparent={chatSettings.isTransparent}
@@ -49,12 +53,16 @@ function App() {
               borderRadius={chatSettings.borderRadius}
               backgroundColor={chatSettings.backgroundColor}
               smoothTransition={chatSettings.smoothTransition}
+              botFilterEnabled={chatSettings.botFilterEnabled}
+              showBadges={chatSettings.showBadges}
               onGenerateUrl={handleGenerateUrl}
               toggleTransparency={chatSettings.toggleTransparency}
               handleOpacityChange={chatSettings.handleOpacityChange}
               handleBorderRadiusChange={chatSettings.handleBorderRadiusChange}
               handleColorChange={chatSettings.handleColorChange}
               onToggleSmoothTransition={chatSettings.toggleSmoothTransition}
+              onToggleBotFilter={chatSettings.toggleBotFilter}
+              onToggleShowBadges={chatSettings.toggleShowBadges}
             />
           </>
         )}

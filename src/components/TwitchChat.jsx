@@ -2,7 +2,16 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import tmi from "tmi.js";
 import { parseBadges, parseEmotes } from "emotettv";
 
-function TwitchChat({ channelName, isTransparent, opacity, borderRadius, backgroundColor, smoothTransition }) {
+function TwitchChat({ 
+  channelName, 
+  isTransparent, 
+  opacity, 
+  borderRadius, 
+  backgroundColor, 
+  smoothTransition,
+  botFilterEnabled,
+  showBadges
+}) {
   const [messages, setMessages] = useState([]);
   const [options, setOptions] = useState({ channelId: null });
   const chatContainerRef = useRef(null);
@@ -31,14 +40,17 @@ function TwitchChat({ channelName, isTransparent, opacity, borderRadius, backgro
 
   const handleMessage = useCallback(async (channel, tags, text, self) => {
     try {
-      const badges = await parseBadges(tags.badges, tags.username, options);
-      const badgesHTML = badges.toHTML();
+      let badgesHTML = '';
+      if (showBadges) {
+        const badges = await parseBadges(tags.badges, tags.username, options);
+        badgesHTML = badges.toHTML();
+      }
       
       const message = await parseEmotes(text, tags.emotes, options);
       const messageHTML = message.toHTML().replace(/<img/g, '<img class="inline-block align-top"');
       const botFilter = ['nightbot'];
 
-      if (botFilter.includes(tags.username)) {
+      if (botFilterEnabled && botFilter.includes(tags.username)) {
         return;
       }
 
@@ -54,7 +66,7 @@ function TwitchChat({ channelName, isTransparent, opacity, borderRadius, backgro
     } catch (error) {
       console.error('Error processing message:', error);
     }
-  }, [options]);
+  }, [options, botFilterEnabled, showBadges]);
 
   useEffect(() => {
     clientRef.current = new tmi.Client({
@@ -87,7 +99,6 @@ function TwitchChat({ channelName, isTransparent, opacity, borderRadius, backgro
 
       scrollToBottom();
 
-      // Reset scroll behavior after scrolling
       setTimeout(() => {
         if (chatContainerRef.current) {
           chatContainerRef.current.style.scrollBehavior = 'auto';
@@ -112,10 +123,12 @@ function TwitchChat({ channelName, isTransparent, opacity, borderRadius, backgro
           key={msg.id}
           className={`chat-message mb-2 text-white text-shadow ${smoothTransition ? 'animate-fade-in' : ''}`}
         >
-          <span 
-            className="inline-block align-top mr-1"
-            dangerouslySetInnerHTML={{ __html: msg.badges }} 
-          />
+          {showBadges && (
+            <span 
+              className="inline-block align-top mr-1"
+              dangerouslySetInnerHTML={{ __html: msg.badges }} 
+            />
+          )}
           <b className="inline-block align-middle" style={{ color: msg.color }}>{msg.username}</b>
           <span className="align-middle mr-1">:</span> 
           <span className="align-middle" dangerouslySetInnerHTML={{ __html: msg.message }} />

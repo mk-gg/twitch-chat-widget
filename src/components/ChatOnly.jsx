@@ -10,6 +10,8 @@ function ChatOnly() {
   const backgroundColor = `#${searchParams.get('backgroundColor') || '000000'}`
   const borderRadius = !isTransparent ? parseInt(searchParams.get('borderRadius') || '0') : 0
   const smoothTransition = searchParams.get('smoothTransition') === 'true'
+  const botFilterEnabled = searchParams.get('botFilterEnabled') === 'true'
+  const showBadges = searchParams.get('showBadges') === 'true'
 
   return (
     <div className="chat-only h-screen overflow-hidden">
@@ -20,6 +22,8 @@ function ChatOnly() {
         borderRadius={borderRadius}
         backgroundColor={backgroundColor}
         smoothTransition={smoothTransition}
+        botFilterEnabled={botFilterEnabled}
+        showBadges={showBadges}
       />
     </div>
   )
