@@ -71,7 +71,7 @@ function TwitchChat({ channelName, isTransparent, opacity, borderRadius, backgro
   }, [channelName, handleMessage]);
 
   useEffect(() => {
-    if (chatContainerRef.current && smoothTransition) {
+    if (chatContainerRef.current) {
       const scrollToBottom = () => {
         const scrollHeight = chatContainerRef.current.scrollHeight;
         const height = chatContainerRef.current.clientHeight;
@@ -79,14 +79,26 @@ function TwitchChat({ channelName, isTransparent, opacity, borderRadius, backgro
         chatContainerRef.current.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
       };
 
+      if (smoothTransition) {
+        chatContainerRef.current.style.scrollBehavior = 'smooth';
+      } else {
+        chatContainerRef.current.style.scrollBehavior = 'auto';
+      }
+
       scrollToBottom();
+
+      // Reset scroll behavior after scrolling
+      setTimeout(() => {
+        if (chatContainerRef.current) {
+          chatContainerRef.current.style.scrollBehavior = 'auto';
+        }
+      }, 300);
     }
   }, [messages, smoothTransition]);
 
   const chatStyle = {
     backgroundColor: isTransparent ? 'transparent' : `${backgroundColor}${Math.round(opacity * 255).toString(16).padStart(2, '0')}`,
     ...(isTransparent ? {} : { borderRadius: `${borderRadius}px` }),
-    transition: smoothTransition ? 'all 0.3s ease-out' : 'none',
   };
 
   return (
